@@ -1,10 +1,11 @@
 import { FlatList, View, StyleSheet } from 'react-native';
 import RepositoryItem from './RepositoryItem';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
     separator: {
         height: 2,
-        backgroundColor: '#CCC',
+        backgroundColor: theme.colors.primary,
         marginVertical: 4,
     },
 });

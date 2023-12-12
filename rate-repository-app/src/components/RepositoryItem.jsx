@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Subheading, Text } from './Typography';
 
 const RepositoryItem = (props) => {
     const { repo } = props;
     return (
         <View>
-            <Text>Full name: {repo.fullName}</Text>
-            <Text>Description: {repo.description}</Text>
+            <Subheading color='primary'>Full name: {repo.fullName}</Subheading>
+            <Text color='textSecondary'>Description: {repo.description}</Text>
             <Text>Language: {repo.language}</Text>
             <Text>Forks: {repo.forksCount}</Text>
             <Text>Stars: {repo.stargazersCount}</Text>
