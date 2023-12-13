@@ -4,7 +4,7 @@ import AppBar from './AppBar';
 import { Routes, Route, Navigate } from 'react-router-native';
 import SignIn from './SingIn';
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         flexShrink: 1,
@@ -13,7 +13,7 @@ const style = StyleSheet.create({
 
 const Main = () => {
     return (
-        <View style={style.container}>
+        <View style={styles.container}>
             <AppBar />
             <Routes>
                 <Route path='/' element={<RepositoryList />} />
