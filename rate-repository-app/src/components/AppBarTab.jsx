@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet } from 'react-native';
 import { Heading } from './Typography';
 import theme from '../theme';
+import { Link } from 'react-router-native';
 
 const style = StyleSheet.create({
     pressed: {
@@ -14,7 +15,7 @@ const style = StyleSheet.create({
 });
 
 const AppBarTab = (props) => {
-    const { text } = props;
+    const { text, navigateTo } = props;
     return (
         <Pressable
             style={({ pressed }) => [
@@ -25,7 +26,9 @@ const AppBarTab = (props) => {
                 },
                 style.container,
             ]}>
-            <Heading>{text}</Heading>
+            <Link to={navigateTo} underlayColor='#0366d6'>
+                <Heading>{text}</Heading>
+            </Link>
         </Pressable>
     );
 };
