@@ -5,6 +5,7 @@ const theme = {
         primary: '#0366d6',
         hightlight: '#77b6fd',
         light: '#f3f3f3',
+        error: 'firebrick',
     },
     fontSizes: {
         subtext: 10,
