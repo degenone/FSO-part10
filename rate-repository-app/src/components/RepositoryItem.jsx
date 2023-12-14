@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     language: {
         backgroundColor: theme.colors.primary,
-        color: '#f3f3f3',
+        color: theme.colors.light,
         borderRadius: 5,
         padding: 5,
     },
