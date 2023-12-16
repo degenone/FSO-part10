@@ -5,6 +5,9 @@ import { Text } from '../Typography';
 import theme from '../../theme';
 import * as yup from 'yup';
 import useSignIn from '../../hooks/useSignIn';
+import useAuthStorage from '../../hooks/useAuthStorage';
+import { useApolloClient } from '@apollo/client';
+import { useNavigate } from 'react-router';
 
 const styles = StyleSheet.create({
     container: {
@@ -37,6 +40,9 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
     const [signIn] = useSignIn();
+    const authStorage = useAuthStorage();
+    const apolloClient = useApolloClient();
+    const navigate = useNavigate();
     const onSubmit = async (values) => {
         const { username, password } = values;
         try {
@@ -46,7 +52,9 @@ const SignIn = () => {
                     authenticate: { accessToken, expiresAt },
                 },
             } = result;
-            console.log(accessToken, expiresAt);
+            await authStorage.setAccessToken(accessToken, expiresAt);
+            apolloClient.resetStore();
+            navigate('/');
         } catch (error) {
             console.log('error:', error);
         }

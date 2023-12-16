@@ -35,6 +35,7 @@ const RepositoryList = () => {
             <Heading style={styles.heading}>Loading repositories...</Heading>
         );
     }
+
     const repositoryNodes = repositories
         ? repositories.edges.map((e) => e.node)
         : [];
