@@ -15,9 +15,27 @@ const style = StyleSheet.create({
 });
 
 const AppBarTab = (props) => {
-    const { text, navigateTo } = props;
+    const { text, navigateTo, onPress } = props;
+    if (!onPress) {
+        return (
+            <Pressable
+                style={({ pressed }) => [
+                    {
+                        backgroundColor: pressed
+                            ? style.pressed.backgroundColor
+                            : 'transparent',
+                    },
+                    style.container,
+                ]}>
+                <Link to={navigateTo} underlayColor='#0366d6'>
+                    <Heading>{text}</Heading>
+                </Link>
+            </Pressable>
+        );
+    }
     return (
         <Pressable
+            onPress={onPress}
             style={({ pressed }) => [
                 {
                     backgroundColor: pressed
@@ -26,9 +44,7 @@ const AppBarTab = (props) => {
                 },
                 style.container,
             ]}>
-            <Link to={navigateTo} underlayColor='#0366d6'>
-                <Heading>{text}</Heading>
-            </Link>
+            <Heading>{text}</Heading>
         </Pressable>
     );
 };
