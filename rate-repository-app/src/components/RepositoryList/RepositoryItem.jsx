@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
-import { Subheading, Text } from './Typography';
-import theme from '../theme';
+import { Subheading, Text } from '../Typography';
+import theme from '../../theme';
 import StatDisplay from './StatDisplay';
 
 const styles = StyleSheet.create({

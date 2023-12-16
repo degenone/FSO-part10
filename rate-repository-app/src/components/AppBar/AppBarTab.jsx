@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet } from 'react-native';
-import { Heading } from './Typography';
-import theme from '../theme';
+import { Heading } from '../Typography';
+import theme from '../../theme';
 import { Link } from 'react-router-native';
 
 const style = StyleSheet.create({

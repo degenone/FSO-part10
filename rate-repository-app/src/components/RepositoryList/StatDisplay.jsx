@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Text } from './Typography';
+import { Text } from '../Typography';
 
 const StatDisplay = (props) => {
     const { number, text } = props;
