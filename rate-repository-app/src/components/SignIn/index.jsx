@@ -38,6 +38,30 @@ const validationSchema = yup.object().shape({
         .required('Password is required.'),
 });
 
+export const SignInContainer = (props) => {
+    const { onSubmit } = props;
+    return (
+        <Formik
+            initialValues={{ username: '', password: '' }}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}>
+            {({ handleSubmit }) => (
+                <View style={styles.container}>
+                    <FormikTextInput name='username' placeholder='Username' />
+                    <FormikTextInput
+                        name='password'
+                        placeholder='Password'
+                        secureTextEntry
+                    />
+                    <Pressable onPress={handleSubmit}>
+                        <Text style={styles.btn}>Sign In</Text>
+                    </Pressable>
+                </View>
+            )}
+        </Formik>
+    );
+};
+
 const SignIn = () => {
     const [signIn] = useSignIn();
     const authStorage = useAuthStorage();
@@ -59,26 +83,7 @@ const SignIn = () => {
             console.log('error:', error);
         }
     };
-    return (
-        <Formik
-            initialValues={{ username: '', password: '' }}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}>
-            {({ handleSubmit }) => (
-                <View style={styles.container}>
-                    <FormikTextInput name='username' placeholder='Username' />
-                    <FormikTextInput
-                        name='password'
-                        placeholder='Password'
-                        secureTextEntry
-                    />
-                    <Pressable onPress={handleSubmit}>
-                        <Text style={styles.btn}>Sign In</Text>
-                    </Pressable>
-                </View>
-            )}
-        </Formik>
-    );
+    return <SignInContainer onSubmit={onSubmit} />;
 };
 
 export default SignIn;
