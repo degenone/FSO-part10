@@ -1,8 +1,9 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import theme from '../../theme';
 import useRepositories from '../../hooks/useRepositories';
 import { Heading } from '../Typography';
+import { useNavigate } from 'react-router';
 
 const styles = StyleSheet.create({
     separator: {
@@ -23,10 +24,11 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = (props) => {
     const { repositories, loading, error } = props;
+    const navitage = useNavigate();
     if (error) {
         return (
             <Heading style={[styles.heading, styles.error]}>
-                {error.graphQLErrors.map((e) => e.message).join(', ')}
+                {error.message}
             </Heading>
         );
     }
@@ -42,7 +44,13 @@ export const RepositoryListContainer = (props) => {
         <FlatList
             data={repositoryNodes}
             ItemSeparatorComponent={ItemSeparator}
-            renderItem={({ item }) => <RepositoryItem repo={item} />}
+            renderItem={({ item }) => {
+                return (
+                    <Pressable onPress={() => navitage(`/${item.id}`)}>
+                        <RepositoryItem repo={item} />
+                    </Pressable>
+                );
+            }}
             keyExtractor={(repo) => repo.id}
         />
     );

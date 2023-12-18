@@ -1,7 +1,8 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { Subheading, Text } from '../Typography';
 import theme from '../../theme';
 import StatDisplay from './StatDisplay';
+import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
     container: {
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
         color: theme.colors.light,
         borderRadius: 5,
         padding: 5,
+    },
+    linkBtn: {
+        textAlign: 'center',
+        marginTop: 5,
     },
 });
 
@@ -56,6 +61,13 @@ const RepositoryItem = (props) => {
                 <StatDisplay number={repo.ratingAverage} text='Rating' />
                 <StatDisplay number={repo.reviewCount} text='Reviews' />
             </View>
+            {repo.url && (
+                <Pressable onPress={() => Linking.openURL(repo.url)}>
+                    <Text style={[styles.language, styles.linkBtn]}>
+                        Open in GitHub
+                    </Text>
+                </Pressable>
+            )}
         </View>
     );
 };
