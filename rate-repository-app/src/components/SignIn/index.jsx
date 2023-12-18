@@ -1,13 +1,14 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
-import { Text } from '../Typography';
+import { Heading, Text } from '../Typography';
 import theme from '../../theme';
 import * as yup from 'yup';
 import useSignIn from '../../hooks/useSignIn';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import { useApolloClient } from '@apollo/client';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
     container: {
@@ -39,31 +40,42 @@ const validationSchema = yup.object().shape({
 });
 
 export const SignInContainer = (props) => {
-    const { onSubmit } = props;
+    const { onSubmit, errorMessage } = props;
     return (
-        <Formik
-            initialValues={{ username: '', password: '' }}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}>
-            {({ handleSubmit }) => (
-                <View style={styles.container}>
-                    <FormikTextInput name='username' placeholder='Username' />
-                    <FormikTextInput
-                        name='password'
-                        placeholder='Password'
-                        secureTextEntry
-                    />
-                    <Pressable onPress={handleSubmit}>
-                        <Text style={styles.btn}>Sign In</Text>
-                    </Pressable>
-                </View>
+        <View>
+            <Formik
+                initialValues={{ username: '', password: '' }}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
+                {({ handleSubmit }) => (
+                    <View style={styles.container}>
+                        <FormikTextInput
+                            name='username'
+                            placeholder='Username'
+                        />
+                        <FormikTextInput
+                            name='password'
+                            placeholder='Password'
+                            secureTextEntry
+                        />
+                        <Pressable onPress={handleSubmit}>
+                            <Text style={styles.btn}>Sign In</Text>
+                        </Pressable>
+                    </View>
+                )}
+            </Formik>
+            {errorMessage && (
+                <Heading color='error' style={styles.container}>
+                    Error occured: {errorMessage}
+                </Heading>
             )}
-        </Formik>
+        </View>
     );
 };
 
 const SignIn = () => {
     const [signIn] = useSignIn();
+    const [errorMessage, setErrorMessage] = useState('');
     const authStorage = useAuthStorage();
     const apolloClient = useApolloClient();
     const navigate = useNavigate();
@@ -80,10 +92,10 @@ const SignIn = () => {
             apolloClient.resetStore();
             navigate('/');
         } catch (error) {
-            console.log('error:', error);
+            setErrorMessage(error.message);
         }
     };
-    return <SignInContainer onSubmit={onSubmit} />;
+    return <SignInContainer onSubmit={onSubmit} errorMessage={errorMessage} />;
 };
 
 export default SignIn;
