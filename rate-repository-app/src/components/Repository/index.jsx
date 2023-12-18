@@ -2,6 +2,9 @@ import useRepository from '../../hooks/useRepository';
 import RepositoryItem from '../RepositoryList/RepositoryItem';
 import { useParams } from 'react-router';
 import { Heading } from '../Typography';
+import { FlatList } from 'react-native';
+import ReviewItem from './ReviewItem';
+import { ItemSeparator } from '../RepositoryList';
 
 const Repository = () => {
     const { repoId } = useParams();
@@ -12,7 +15,18 @@ const Repository = () => {
     if (error) {
         return <Heading>Error: {error.message}</Heading>;
     }
-    return <RepositoryItem repo={repository} />;
+    const reviews = repository.reviews
+        ? repository.reviews.edges.map((e) => e.node)
+        : [];
+    return (
+        <FlatList
+            data={reviews}
+            renderItem={({ item }) => <ReviewItem review={item} />}
+            keyExtractor={({ id }) => id}
+            ItemSeparatorComponent={ItemSeparator}
+            ListHeaderComponent={<RepositoryItem repo={repository} />}
+        />
+    );
 };
 
 export default Repository;
