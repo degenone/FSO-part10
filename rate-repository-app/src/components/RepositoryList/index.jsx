@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryList = () => {
-    const { repositories, loading, error } = useRepositories();
+export const RepositoryListContainer = (props) => {
+    const { repositories, loading, error } = props;
     if (error) {
         return (
             <Heading style={[styles.heading, styles.error]}>
@@ -35,7 +35,6 @@ const RepositoryList = () => {
             <Heading style={styles.heading}>Loading repositories...</Heading>
         );
     }
-
     const repositoryNodes = repositories
         ? repositories.edges.map((e) => e.node)
         : [];
@@ -45,6 +44,17 @@ const RepositoryList = () => {
             ItemSeparatorComponent={ItemSeparator}
             renderItem={({ item }) => <RepositoryItem repo={item} />}
             keyExtractor={(repo) => repo.id}
+        />
+    );
+};
+
+const RepositoryList = () => {
+    const { repositories, loading, error } = useRepositories();
+    return (
+        <RepositoryListContainer
+            repositories={repositories}
+            loading={loading}
+            error={error}
         />
     );
 };
