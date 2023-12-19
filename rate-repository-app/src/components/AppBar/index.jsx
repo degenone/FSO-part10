@@ -37,6 +37,7 @@ const AppBar = () => {
                             text='Create review'
                             navigateTo='/create-review'
                         />
+                        <AppBarTab text='My reviews' navigateTo='/my-reviews' />
                         <AppBarTab
                             text={`Sign out (${data.me.username})`}
                             onPress={handleSignOut}

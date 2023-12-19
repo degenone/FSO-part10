@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 });
 
 const ReviewItem = (props) => {
-    const { review } = props;
+    const { review, isCreator } = props;
     const date = new Date(Date.parse(review.createdAt));
     return (
         <View style={styles.container}>
@@ -36,7 +36,11 @@ const ReviewItem = (props) => {
                 </Text>
             </View>
             <View style={styles.details}>
-                <Text fontWeight='bold'>{review.user.username}</Text>
+                <Text fontWeight='bold'>
+                    {!isCreator
+                        ? review.user.username
+                        : review.repository.fullName}
+                </Text>
                 <Text color='textSecondary'>{format(date, 'dd.MM.yyyy')}</Text>
                 <Text>{review.text}</Text>
             </View>
