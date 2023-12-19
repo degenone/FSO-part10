@@ -1,11 +1,13 @@
+import useSingUp from '../../hooks/useSignUp';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import SignUpContainer from './SignUpContainer';
 import useSignIn from '../../hooks/useSignIn';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import { useApolloClient } from '@apollo/client';
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
-import SignInContainer from './SignInContainer';
 
-const SignIn = () => {
+const SignUp = () => {
+    const [signUp] = useSingUp();
     const [signIn] = useSignIn();
     const [errorMessage, setErrorMessage] = useState('');
     const authStorage = useAuthStorage();
@@ -14,6 +16,7 @@ const SignIn = () => {
     const onSubmit = async (values) => {
         const { username, password } = values;
         try {
+            await signUp(username, password);
             const result = await signIn(username, password);
             const {
                 data: {
@@ -27,7 +30,7 @@ const SignIn = () => {
             setErrorMessage(error.message);
         }
     };
-    return <SignInContainer onSubmit={onSubmit} errorMessage={errorMessage} />;
+    return <SignUpContainer onSubmit={onSubmit} errorMessage={errorMessage} />;
 };
 
-export default SignIn;
+export default SignUp;

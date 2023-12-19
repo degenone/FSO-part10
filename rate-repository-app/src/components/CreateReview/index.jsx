@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import FormikTextInput from '../SignIn/FormikTextInput';
+import FormikTextInput from '../FormikTextInput';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Heading, Text } from '../Typography';
 import * as yup from 'yup';
