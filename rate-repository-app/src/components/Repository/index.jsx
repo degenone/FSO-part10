@@ -1,10 +1,10 @@
 import useRepository from '../../hooks/useRepository';
-import RepositoryItem from '../RepositoryList/RepositoryItem';
+import RepositoryItem from '../RepositoryItem';
 import { useParams } from 'react-router';
 import { Heading } from '../Typography';
 import { FlatList } from 'react-native';
 import ReviewItem from './ReviewItem';
-import { ItemSeparator } from '../RepositoryList';
+import ItemSeparator from '../ItemSeparator';
 
 const Repository = () => {
     const { repoId } = useParams();
