@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryList = () => {
-    const { repositories, loading, error, refetch } = useRepositories();
+    const { repositories, loading, error, refetch, fetchMore } =
+        useRepositories();
     const inputRef = useRef();
     const [filterTerm, setFilterTerm] = useState('');
     const debounceFilterTerm = useDebouncedCallback(
@@ -58,6 +59,9 @@ const RepositoryList = () => {
         setFilterTerm('');
         inputRef.current.clear();
     };
+    const onEndReached = () => {
+        fetchMore();
+    };
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
@@ -77,6 +81,7 @@ const RepositoryList = () => {
                 repositories={repositories}
                 loading={loading}
                 error={error}
+                onEndReached={onEndReached}
             />
         </View>
     );

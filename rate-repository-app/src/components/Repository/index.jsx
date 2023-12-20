@@ -8,7 +8,7 @@ import ItemSeparator from '../ItemSeparator';
 
 const Repository = () => {
     const { repoId } = useParams();
-    const { repository, loading, error } = useRepository(repoId);
+    const { repository, loading, error, fetchMore } = useRepository(repoId);
     if (loading) {
         return <Heading>Loading repository...</Heading>;
     }
@@ -18,6 +18,9 @@ const Repository = () => {
     const reviews = repository.reviews
         ? repository.reviews.edges.map((e) => e.node)
         : [];
+    const onEndReached = () => {
+        fetchMore();
+    };
     return (
         <FlatList
             data={reviews}
@@ -25,6 +28,8 @@ const Repository = () => {
             keyExtractor={({ id }) => id}
             ItemSeparatorComponent={ItemSeparator}
             ListHeaderComponent={<RepositoryItem repo={repository} />}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.5}
         />
     );
 };

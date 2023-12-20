@@ -3,8 +3,7 @@ import { Text } from '../Typography';
 import theme from '../../theme';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router';
-import { useMutation } from '@apollo/client';
-import { DELETE_REVIEW } from '../../graphql/mutations';
+import useDeleteReview from '../../hooks/useDeleteReview';
 
 const styles = StyleSheet.create({
     container: {
@@ -53,12 +52,7 @@ const ReviewItem = (props) => {
     const { review, isCreator, refetch } = props;
     const date = new Date(Date.parse(review.createdAt));
     const navitage = useNavigate();
-    const [mutate] = useMutation(DELETE_REVIEW, {
-        onCompleted: () => refetch(),
-    });
-    const deleteReview = () => {
-        mutate({ variables: { deleteReviewId: review.id } });
-    };
+    const deleteReview = useDeleteReview(refetch);
     const handleDeleteClick = () => {
         Alert.alert(
             'Delete review',
@@ -70,7 +64,7 @@ const ReviewItem = (props) => {
                 },
                 {
                     text: 'Delete',
-                    onPress: deleteReview,
+                    onPress: () => deleteReview(review.id),
                 },
             ]
         );

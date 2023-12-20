@@ -2,10 +2,10 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../../theme';
 import AppBarTab from './AppBarTab';
-import { useApolloClient, useQuery } from '@apollo/client';
-import { ME } from '../../graphql/queries';
+import { useApolloClient } from '@apollo/client';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import { useNavigate } from 'react-router';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-    const { data, loading } = useQuery(ME);
+    const { user, loading } = useCurrentUser();
     const authStorage = useAuthStorage();
     const apolloClient = useApolloClient();
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AppBar = () => {
         <View style={styles.container}>
             <ScrollView horizontal style={styles.pb5}>
                 <AppBarTab text='Repositories' navigateTo='/' />
-                {!loading && data.me !== null ? (
+                {!loading && user !== null ? (
                     <>
                         <AppBarTab
                             text='Create review'
@@ -39,7 +39,7 @@ const AppBar = () => {
                         />
                         <AppBarTab text='My reviews' navigateTo='/my-reviews' />
                         <AppBarTab
-                            text={`Sign out (${data.me.username})`}
+                            text={`Sign out (${user.username})`}
                             onPress={handleSignOut}
                         />
                     </>

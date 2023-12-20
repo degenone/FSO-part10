@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryListContainer = (props) => {
-    const { repositories, loading, error } = props;
+    const { repositories, loading, error, onEndReached } = props;
     const navitage = useNavigate();
     if (error) {
         return (
@@ -45,6 +45,8 @@ const RepositoryListContainer = (props) => {
                 );
             }}
             keyExtractor={(repo) => repo.id}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.5}
         />
     );
 };
