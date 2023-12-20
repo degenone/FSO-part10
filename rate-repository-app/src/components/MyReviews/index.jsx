@@ -5,7 +5,7 @@ import { ME } from '../../graphql/queries';
 import ItemSeparator from '../ItemSeparator';
 
 const MyReviews = () => {
-    const { data, loading } = useQuery(ME, {
+    const { data, loading, refetch } = useQuery(ME, {
         variables: { includeReviews: true },
         fetchPolicy: 'cache-and-network',
     });
@@ -19,7 +19,7 @@ const MyReviews = () => {
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={({ item }) => (
-                <ReviewItem review={item} isCreator={true} />
+                <ReviewItem review={item} isCreator={true} refetch={refetch} />
             )}
         />
     );
